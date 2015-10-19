@@ -22,7 +22,6 @@ class CompletePurchaseResponse extends AbstractResponse
     {
         $data = ($this->getData());
 
-
         if (!isset($data['success'])) {
             return false;
         }
@@ -31,11 +30,9 @@ class CompletePurchaseResponse extends AbstractResponse
             return false;
         }
 
-
         if ($data['success'] !== true) {
             return false;
         }
-
 
         return true;
     }

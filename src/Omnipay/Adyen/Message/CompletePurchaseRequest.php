@@ -15,7 +15,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         $data['pspReference'] = $this->getPspReference();
         $data['merchantReference'] = $this->getMerchantReference();
         $data['skinCode'] = $this->getSkinCode();
-        $data['merchantSig'] = $this->generateResponseSignature();
+        $data['merchantSig'] = $this->getMerchantSig();
 
         return $data;
     }
@@ -70,20 +70,49 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $this->setParameter('merchantReturnData', $value);
     }
 
+    public function getMerchantSig()
+    {
+        return $this->getParameter('merchantSig');
+    }
+
+    public function setMerchantSig($value)
+    {
+        return $this->setParameter('merchantSig', $value);
+    }
+
+    public function getPaymentMethod()
+    {
+        return $this->getParameter('paymentMethod');
+    }
+
+    public function setPaymentMethod($value)
+    {
+        return $this->setParameter('paymentMethod', $value);
+    }
+
     public function generateResponseSignature()
     {
-        return base64_encode(
-            hash_hmac(
-                'sha1',
-                $this->getAuthResult().
-                $this->getPspReference().
-                $this->getMerchantReference().
-                $this->getSkinCode().
-                $this->getMerchantReturnData(),
-                $this->getSecret(),
-                true
-            )
+        $params = array(
+            'authResult'            => $this->getAuthResult(),
+            'pspReference'          => $this->getPspReference(),
+            'merchantReference'     => $this->getMerchantReference(),
+            'skinCode'              => $this->getSkinCode(),
+            'paymentMethod'         => $this->getPaymentMethod(),
+            'shopperLocale'         => $this->getShopperLocale(),
+            'merchantReturnData'    => $this->getMerchantReturnData()
         );
+
+        $escapeval = function ($val) {
+            return str_replace(':', '\\:', str_replace('\\', '\\\\', $val));
+        };
+
+        $params = array_filter($params);
+        ksort($params, SORT_STRING);
+
+        $signData = implode(":", array_map($escapeval, array_merge(array_keys($params), array_values($params))));
+
+        $merchantSig = base64_encode(hash_hmac('sha256', $signData, pack("H*", $this->getSecret()), true));
+        return $merchantSig;
     }
 
     public function send()
@@ -96,6 +125,12 @@ class CompletePurchaseRequest extends PurchaseRequest
         return new CompletePurchaseResponse($this, $data);
     }
 
+    /**
+     * Check if the payment request is authorized. For use outside this library you
+     * should however use the isSuccessful() method of the CompletePurchaseResponse
+     * which also validates the response.
+     * @return bool
+     */
     public function isSuccessful()
     {
         return $this->getAuthResult() == 'AUTHORISED' || $this->getAuthResult() == 'AUTHORISATION';

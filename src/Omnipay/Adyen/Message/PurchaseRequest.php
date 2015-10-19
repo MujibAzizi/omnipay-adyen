@@ -258,7 +258,7 @@ class PurchaseRequest extends AbstractRequest
 
         // base64 encoding is necessary because the string needs to be send over the internet and
         // the hexadecimal result of the HMAC encryption could include escape characters
-        return base64_encode(hash_hmac('sha1', $sign, $this->getSecret(), true));
+        return base64_encode(hash_hmac('sha256', $sign, pack("H*", $this->getSecret()), true));
     }
 
     /**

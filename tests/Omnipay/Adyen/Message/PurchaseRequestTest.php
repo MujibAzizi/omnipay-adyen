@@ -12,7 +12,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->initialize(array(
             'merchantAccount' => 'testacc',
             'merchantReference' => 'TEST-10000',
-            'secret' => 'test',
+            'secret' => '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
             'skinCode' => '05cp1ZtM',
             'amount' => 10.00,
             'testMode' => true,
@@ -30,12 +30,12 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame(1000, $data['paymentAmount']);
         $this->assertSame('EUR', $data['currencyCode']);
         $this->assertSame('TEST-10000', $data['merchantReference']);
-        $this->assertSame('uqFsJWd5nYfGH9x4JSwyNuApZCU=', $data['merchantSig']);
+        $this->assertSame('7WVqmmy+RU0NB1r03ddvAIn9PBubG3paxcYGg4+Zo84=', $data['merchantSig']);
     }
 
     public function testGenerateSignature()
     {
-        $this->assertSame('uqFsJWd5nYfGH9x4JSwyNuApZCU=', $this->request->generateSignature($this->request->getData()));
+        $this->assertSame('7WVqmmy+RU0NB1r03ddvAIn9PBubG3paxcYGg4+Zo84=', $this->request->generateSignature($this->request->getData()));
     }
     
     public function testGetSetSessionValidity()

@@ -13,9 +13,9 @@ class CompletePurchaseResponseTest extends TestCase
             array(
                 'success' => true,
                 'allParams' => array(
-                    'merchantSig' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                    'merchantSig' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
                 ),
-                'responseSignature' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                'responseSignature' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
             )
         );
 
@@ -29,9 +29,9 @@ class CompletePurchaseResponseTest extends TestCase
             array(
                 'success' => false,
                 'allParams' => array(
-                    'merchantSig' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                    'merchantSig' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
                 ),
-                'responseSignature' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                'responseSignature' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
             )
         );
 
@@ -45,9 +45,9 @@ class CompletePurchaseResponseTest extends TestCase
             array(
                 'success' => true,
                 'allParams' => array(
-                    'merchantSig' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                    'merchantSig' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
                 ),
-                'responseSignature' => 'Wkf3d2PVmSPu5Zn5N5H240AQfJ0='
+                'responseSignature' => 'ABCdE1FGhij2kLMnOpqRStU34vWXyzABCdefGHI+jKL='
             )
         );
 
@@ -61,9 +61,9 @@ class CompletePurchaseResponseTest extends TestCase
             array(
                 'success' => true,
                 'allParams' => array(
-                    'merchantSig' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                    'merchantSig' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
                 ),
-                'responseSignature' => 'Ti+ACycv7TmV3VY6hfQ6tIIdhGM='
+                'responseSignature' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
             )
         );
 
@@ -72,10 +72,8 @@ class CompletePurchaseResponseTest extends TestCase
 
     public function testGetResponse()
     {
-
         $mock = $this->getMockRequest();
         $response = new CompletePurchaseResponse($mock, array());
         $this->assertSame(serialize($response), serialize($response->getResponse()));
-
     }
 }

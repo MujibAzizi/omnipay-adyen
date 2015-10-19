@@ -28,6 +28,10 @@
         {
             "name": "PeoplePerHour",
             "homepage": "http://www.peopleperhour.com"
+        },
+        {
+            "name": "Mark Kremer",
+            "email": "mail@markkremer.nl"
         }
     ],
     "autoload": {
