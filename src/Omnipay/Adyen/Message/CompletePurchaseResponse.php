@@ -47,4 +47,15 @@ class CompletePurchaseResponse extends AbstractResponse
 
         return $data['authResult'] === 'CANCELLED';
     }
+
+    public function isPending()
+    {
+        $data = ($this->getData());
+
+        if (!isset($data['authResult'])) {
+            return false;
+        }
+
+        return $data['authResult'] === 'PENDING';
+    }
 }
