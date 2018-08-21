@@ -69,6 +69,18 @@ class CompletePurchaseResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
     }
+    
+    public function testIsCancelled()
+    {
+        $response = new CompletePurchaseResponse(
+            $this->getMockRequest(),
+            array(
+                'success' => false,
+                'authResult' => 'CANCELLED',
+            )
+        );
+        $this->assertTrue($response->isCancelled());
+    }
 
     public function testGetResponse()
     {
