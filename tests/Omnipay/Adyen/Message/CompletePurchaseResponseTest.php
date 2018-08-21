@@ -69,7 +69,7 @@ class CompletePurchaseResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
     }
-    
+
     public function testIsCancelled()
     {
         $response = new CompletePurchaseResponse(
@@ -80,6 +80,22 @@ class CompletePurchaseResponseTest extends TestCase
             )
         );
         $this->assertTrue($response->isCancelled());
+    }
+
+    public function testIsNotCancelled()
+    {
+        $response = new CompletePurchaseResponse(
+            $this->getMockRequest(),
+            array(
+                'success' => true,
+                'allParams' => array(
+                    'merchantSig' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
+                ),
+                'responseSignature' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
+            )
+        );
+
+        $this->assertFalse($response->isCancelled());
     }
 
     public function testGetResponse()
