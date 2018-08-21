@@ -98,6 +98,34 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertFalse($response->isCancelled());
     }
 
+    public function testIsPending()
+    {
+        $response = new CompletePurchaseResponse(
+            $this->getMockRequest(),
+            array(
+                'success' => false,
+                'authResult' => 'PENDING',
+            )
+        );
+        $this->assertTrue($response->isPending());
+    }
+
+    public function testIsNotPending()
+    {
+        $response = new CompletePurchaseResponse(
+            $this->getMockRequest(),
+            array(
+                'success' => true,
+                'allParams' => array(
+                    'merchantSig' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
+                ),
+                'responseSignature' => 'YRTyF4SIdrW2mKIbNukCTkZ21dHCzcQYOevrBII+yUI='
+            )
+        );
+
+        $this->assertFalse($response->isPending());
+    }
+
     public function testGetResponse()
     {
         $mock = $this->getMockRequest();
