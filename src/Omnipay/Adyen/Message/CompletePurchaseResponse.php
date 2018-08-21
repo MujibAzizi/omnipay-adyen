@@ -36,4 +36,11 @@ class CompletePurchaseResponse extends AbstractResponse
 
         return true;
     }
+
+    public function isCancelled()
+    {
+        $data = ($this->getData());
+
+        return $data['authResult'] === 'CANCELLED';
+    }
 }
