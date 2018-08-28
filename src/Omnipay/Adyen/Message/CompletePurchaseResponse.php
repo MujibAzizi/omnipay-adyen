@@ -58,4 +58,10 @@ class CompletePurchaseResponse extends AbstractResponse
 
         return $data['authResult'] === 'PENDING';
     }
+
+    public function getTransactionReference()
+    {
+        $data = ($this->getData());
+        return isset($data['pspReference']) ? $data['pspReference'] : '';
+    }
 }
